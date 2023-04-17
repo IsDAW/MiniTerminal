@@ -46,7 +46,7 @@ import java.util.Date;
  */
 public class MiniFileManager {
 
-    private File direccion;
+    private File direccion;//direccion en la que estamos ubicados
     private boolean salida = false;
 
     public void pwd() throws Exception {//muestra la ruta de la carpeta actual
@@ -55,8 +55,12 @@ public class MiniFileManager {
 
     }
 
-    public boolean cd(String x) throws Exception {//cambia la direccion en la que estamos posicionados
-
+    public boolean cd(String x) throws Exception {//cambia la direccion en la que estamos posicionados,si se pone .. se retrocedera a la carpeta anterior
+        if ("..".equals(x)) {
+            File anterior = new File(direccion.getParent());
+            setDireccion(anterior);
+            return true;
+        }
         File cosa = new File(x);
         if (cosa.exists() == true) {
             setDireccion(cosa);
@@ -66,7 +70,7 @@ public class MiniFileManager {
         }
     }
 
-    public void ls() throws Exception {
+    public void ls() throws Exception {//muestra la informacion de los archivos y carpetas en la carpeta actual
 
         if (direccion.isFile() == true) {
             System.out.println("[A]" + direccion.getName());
@@ -95,7 +99,7 @@ public class MiniFileManager {
 
     }
 
-    public void ll() throws Exception {
+    public void ll() throws Exception {//muestra la informacion de los archivos y carpetas en la carpeta actual,añadiendole ademas tamaño y fecha de modificacion
 
         if (direccion.isFile() == true) {
             System.out.println("[A]" + direccion.getName());
@@ -130,7 +134,7 @@ public class MiniFileManager {
         }
     }
 
-    public static long tamañoByte(File x) throws Exception {
+    public static long tamañoByte(File x) throws Exception {//muestra el tamaño del archivo o directorio
 
         long tamaño = x.length();
         return tamaño;
@@ -143,14 +147,15 @@ public class MiniFileManager {
         return tiempo;
     }
 
-    public boolean mkdir(String x) throws Exception {
+    public boolean mkdir(String x) throws Exception {//crea carpeta nueva
         String aux = direccion.getPath() + "/" + x;
         File carpeta = new File(aux);
         return carpeta.mkdir();
 
     }
 
-    public boolean rm(String x) throws Exception {
+    public boolean rm(String x) throws Exception {//borra todo lo que hay en la carpeta,excepto carpetas con subcarpetas,si las hubiera manda aviso
+
         File borrar = new File(x);
         if (borrar.isFile() == true) {
             borrar.delete();
@@ -165,7 +170,6 @@ public class MiniFileManager {
 
                 if (archivos_en_directorio[contador].isDirectory() == true) {
                     String ruta = borrar + "/" + archivos_en_directorio[contador].getName();
-                    System.out.println(ruta);
                     File paraBorrar = new File(ruta);
                     paraBorrar.delete();
 
@@ -177,12 +181,15 @@ public class MiniFileManager {
                 if (archivos_en_directorio[contador].isFile() == true) {
 
                     String ruta = borrar + "/" + archivos_en_directorio[contador].getName();
-                    System.out.println(ruta);
                     File paraBorrar = new File(ruta);
                     paraBorrar.delete();
 
                 }
 
+            }
+            File[] archivosRestantes = borrar.listFiles();
+            if (archivosRestantes.length > 0) {
+                System.out.println("Existen subcarpetas que no han podido ser borradas");
             }
 
             return true;
@@ -193,7 +200,7 @@ public class MiniFileManager {
 
     }
 
-    public boolean mv(String x, String y) throws Exception {//poner como boolean
+    public boolean mv(String x, String y) throws Exception {//mueve o cambia el nombre de un archivo
 
         File origen = new File(x);
         File destino = new File(y);
@@ -201,7 +208,7 @@ public class MiniFileManager {
 
     }
 
-    public static void help() {
+    public static void help() {//muestra que hace los demas comandos
         System.out.println("-El comando pwd te permite ver cual es la carpeta actual");
         System.out.println("-El comando cd permite cambiar la capeta en la que estamos posicionados por otra diferente");
         System.out.println("-El comando ls nos muestra la lista de directorios y archivos de la carpeta actual");
@@ -211,7 +218,7 @@ public class MiniFileManager {
         System.out.println("-El comando mv mueve o renombra ");
     }
 
-    public void exit() {
+    public void exit() {//sale del programa
         System.out.println("Se ha seleccionado salir");
         setSalida(true);
 

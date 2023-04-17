@@ -59,10 +59,11 @@ public class MiniTerminal {
         boolean rutaOk = false;
 
         System.out.println("Introduce la direccion inicial");
-        while (rutaOk == false) {
+        while (rutaOk == false) {//fuerza a poner una ruta valida
             File cosa = new File(lector.nextLine());
             if (cosa.exists() == true) {
                 System.out.println("RUTA CORRECTA");
+                System.out.println("----------------------------------------------------------------------");
                 MiniFileManager comandos = new MiniFileManager(cosa);//crea acceso a la clase
                 rutaOk = true;
 
@@ -112,7 +113,7 @@ public class MiniTerminal {
                             System.out.println("----------------------------------------------------------------------");
                             break;
                         case "rm"://rm
-                            System.out.println("¿Se han borrado los archivos?: " + comandos.rm(opcion1));
+                            System.out.println("¿Se han borrado los archivos posibles?: " + comandos.rm(opcion1));
                             System.out.println("----------------------------------------------------------------------");
                             break;
                         case "mv"://mv
@@ -127,11 +128,11 @@ public class MiniTerminal {
                             comandos.exit();
                             System.out.println("");
                             break;
-                        default:
+                        default://se muestra cuando se ponga otra opcion diferente a las anteriores mencionadas
                             System.out.println("Introduce una opcion valida");
                             System.out.println("----------------------------------------------------------------------");
                             break;
-                    }
+                    }//fin switch
                 }
 
             } else if (cosa.exists() == false) {
