@@ -121,7 +121,7 @@ public class MiniTerminal {
                             System.out.println("----------------------------------------------------------------------");
                             break;
                         case "help"://help
-                            MiniFileManager.help();
+                            comandos.help();
                             System.out.println("----------------------------------------------------------------------");
                             break;
                         case "exit"://exit
