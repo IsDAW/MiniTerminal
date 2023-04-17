@@ -51,7 +51,7 @@ public class MiniFileManager {
 
     public void pwd() throws Exception {//muestra la ruta de la carpeta actual
 
-        System.out.println("La ruta actual es " + direccion.getPath());
+        System.out.println("La ruta actual es " + direccion.getAbsolutePath());
 
     }
 
@@ -60,10 +60,8 @@ public class MiniFileManager {
         File cosa = new File(x);
         if (cosa.exists() == true) {
             setDireccion(cosa);
-            System.out.println("si");
             return true;
         } else {
-            System.out.println("no");
             return false;
         }
     }
@@ -152,20 +150,21 @@ public class MiniFileManager {
 
     }
 
-    public boolean rm() throws Exception {
-        if (direccion.isFile() == true) {
-            direccion.delete();
+    public boolean rm(String x) throws Exception {
+        File borrar = new File(x);
+        if (borrar.isFile() == true) {
+            borrar.delete();
             return true;
 
-        } else if (direccion.isDirectory() == true) {
+        } else if (borrar.isDirectory() == true) {
 
-            File[] archivos_en_directorio = direccion.listFiles();
+            File[] archivos_en_directorio = borrar.listFiles();
             Arrays.sort(archivos_en_directorio);
 
             for (int contador = 0; contador < archivos_en_directorio.length; contador++) {
 
                 if (archivos_en_directorio[contador].isDirectory() == true) {
-                    String ruta = direccion + "/" + archivos_en_directorio[contador].getName();
+                    String ruta = borrar + "/" + archivos_en_directorio[contador].getName();
                     System.out.println(ruta);
                     File paraBorrar = new File(ruta);
                     paraBorrar.delete();
@@ -177,7 +176,7 @@ public class MiniFileManager {
 
                 if (archivos_en_directorio[contador].isFile() == true) {
 
-                    String ruta = direccion + "/" + archivos_en_directorio[contador].getName();
+                    String ruta = borrar + "/" + archivos_en_directorio[contador].getName();
                     System.out.println(ruta);
                     File paraBorrar = new File(ruta);
                     paraBorrar.delete();
@@ -203,13 +202,13 @@ public class MiniFileManager {
     }
 
     public static void help() {
-        System.out.println("El comando pwd te permite ver cual es la carpeta actual");
-        System.out.println("El comando cd permite cambiar la capeta en la que estamos posicionados por otra diferente");
-        System.out.println("El comando ls nos muestra la lista de directorios y archivos de la carpeta actual");
-        System.out.println("El comando ll nos muestra lo mismo que ls + el tamaño y la fecha de la ultima modificacion");
-        System.out.println("El comando mkdir crea el directorio en la carpeta actual");
-        System.out.println("El comando rm borra el fichero,si es una carpeta borrara los ficheros de dentro,ademas si tiene subcarpetas avisara al usuario");
-        System.out.println("El comando mv mueve o renombra ");
+        System.out.println("-El comando pwd te permite ver cual es la carpeta actual");
+        System.out.println("-El comando cd permite cambiar la capeta en la que estamos posicionados por otra diferente");
+        System.out.println("-El comando ls nos muestra la lista de directorios y archivos de la carpeta actual");
+        System.out.println("-El comando ll nos muestra lo mismo que ls + el tamaño y la fecha de la ultima modificacion");
+        System.out.println("-El comando mkdir crea el directorio en la carpeta actual");
+        System.out.println("-El comando rm borra el fichero,si es una carpeta borrara los ficheros de dentro,ademas si tiene subcarpetas avisara al usuario");
+        System.out.println("-El comando mv mueve o renombra ");
     }
 
     public void exit() {

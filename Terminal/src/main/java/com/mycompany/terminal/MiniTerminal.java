@@ -56,77 +56,91 @@ public class MiniTerminal {
 
         boolean salida = false;
         int opcion = 10;
+        boolean rutaOk = false;
 
         System.out.println("Introduce la direccion inicial");
-        File cosa = new File(lector.nextLine());
+        while (rutaOk == false) {
+            File cosa = new File(lector.nextLine());
+            if (cosa.exists() == true) {
+                System.out.println("RUTA CORRECTA");
+                MiniFileManager comandos = new MiniFileManager(cosa);//crea acceso a la clase
+                rutaOk = true;
 
-        MiniFileManager comandos = new MiniFileManager(cosa);//crea acceso a la clase
+                while (comandos.isSalida() == false) {
+                    System.out.println("Bienvenido al terminal.Introduce uno de los siguientes comandos :");
+                    System.out.println("");
+                    System.out.println("pwd");
+                    System.out.println("cd <dir>");
+                    System.out.println("ls");
+                    System.out.println("ll");
+                    System.out.println("mkdir <dir>");
+                    System.out.println("rm <file>");
+                    System.out.println("mv <file1> <file2>");
+                    System.out.println("help");
+                    System.out.println("exit");
+                    System.out.println("----------------------------------------------------------------------");
+                    String seleccion = lector.next();
+                    String opcion1 = "";
+                    String opcion2 = "";
 
-        while (comandos.isSalida() == false) {
+                    if ("cd".equals(seleccion) || "mkdir".equals(seleccion) || "rm".equals(seleccion)) {
+                        opcion1 = lector.next();
+                    } else if ("mv".equals(seleccion)) {
+                        opcion1 = lector.next();
+                        opcion2 = lector.next();
+                    }
 
-            System.out.println("Bienvenido al terminal.Seleccione una opcion");
-            System.out.println("");
-            System.out.println("1. pwd ");
-            System.out.println("2. cd ");
-            System.out.println("3. ls ");
-            System.out.println("4. ll ");
-            System.out.println("5. mkdir ");
-            System.out.println("6. rm ");
-            System.out.println("7. mv ");
-            System.out.println("8. help ");
-            System.out.println("9. exit ");
+                    switch (seleccion) {
+                        case "pwd"://pwd
+                            comandos.pwd();
+                            System.out.println("----------------------------------------------------------------------");
+                            break;
+                        case "cd"://cd
+                            System.out.println("¿Se ha cambiado la posicion?: " + comandos.cd(opcion1));
+                            System.out.println("----------------------------------------------------------------------");
+                            break;
+                        case "ls"://ls
+                            comandos.ls();
+                            System.out.println("----------------------------------------------------------------------");
+                            break;
+                        case "ll"://ll
+                            comandos.ll();
+                            System.out.println("----------------------------------------------------------------------");
+                            break;
+                        case "mkdir"://mkdir
+                            System.out.println("¿Se ha creado la carpeta?: " + comandos.mkdir(opcion1));
+                            System.out.println("----------------------------------------------------------------------");
+                            break;
+                        case "rm"://rm
+                            System.out.println("¿Se han borrado los archivos?: " + comandos.rm(opcion1));
+                            System.out.println("----------------------------------------------------------------------");
+                            break;
+                        case "mv"://mv
+                            System.out.println("¿Se ha movido o renombrado?: " + comandos.mv(opcion1, opcion2));
+                            System.out.println("----------------------------------------------------------------------");
+                            break;
+                        case "help"://help
+                            MiniFileManager.help();
+                            System.out.println("----------------------------------------------------------------------");
+                            break;
+                        case "exit"://exit
+                            comandos.exit();
+                            System.out.println("");
+                            break;
+                        default:
+                            System.out.println("Introduce una opcion valida");
+                            System.out.println("----------------------------------------------------------------------");
+                            break;
+                    }
+                }
 
-            int seleccion = lector.nextInt();
-
-            switch (seleccion) {
-
-                case 1://pwd
-                    comandos.pwd();
-                    break;
-
-                case 2://cd
-                    System.out.println("Introduce la nueva direccion");
-                    System.out.println("¿Se ha cambiado la posicion?: " + comandos.cd(lector.next()));
-
-                    break;
-
-                case 3://ls                
-                    comandos.ls();
-                    break;
-
-                case 4://ll 
-                    comandos.ll();
-                    break;
-
-                case 5://mkdir 
-
-                    System.out.println("Introduce el nombre del directorio a crear");
-                    System.out.println("¿Se ha creado la carpeta?: " + comandos.mkdir(lector.next()));
-                    break;
-
-                case 6://rm 
-                    System.out.println("¿Se han borrado los archivos?: " + comandos.rm());
-                    break;
-
-                case 7://mv  
-                    System.out.println("Introduce la direcciona del fichero que quieres renombrar y despues la direccion o nombre que le quieres dar");
-                    System.out.println("¿Se ha movido o renombrado?: " + comandos.mv(lector.next(), lector.next()));
-                    break;
-
-                case 8://help
-
-                    MiniFileManager.help();
-                    break;
-
-                case 9://exit
-                    comandos.exit();
-                    break;
-
+            } else if (cosa.exists() == false) {
+                System.out.println("RUTA INCORRECTA");
+                System.out.println("----------------------------------------------------------------------");
+                System.out.println("Introduce otra ruta");
             }
         }
 
     }
 
 }
-///Ruta para probar --> /3º_Ev/Programacion/EjFicheros/Documentos/Mis_Cosas/Fotografias
-///Ruta para probar --> \3º_Ev\Programacion\EjFicheros\Documentos\Mis_Cosas\Fotografias\AA.txt.txt
