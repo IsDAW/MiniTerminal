@@ -49,7 +49,7 @@ public class MiniTerminal {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         // TODO code application logic here
 
         Scanner lector = new Scanner(System.in);
@@ -60,7 +60,7 @@ public class MiniTerminal {
         System.out.println("Introduce la direccion inicial");
         File cosa = new File(lector.nextLine());
 
-        MiniFileManager comandos = new MiniFileManager(cosa);//crea acceso al 
+        MiniFileManager comandos = new MiniFileManager(cosa);//crea acceso a la clase
 
         while (comandos.isSalida() == false) {
 
@@ -81,15 +81,13 @@ public class MiniTerminal {
             switch (seleccion) {
 
                 case 1://pwd
-
                     comandos.pwd();
                     break;
 
                 case 2://cd
                     System.out.println("Introduce la nueva direccion");
-                    comandos.cd(lector.next());
-                    lector.nextLine();
-                    System.out.println("Se ha cambiado la posicion");
+                    System.out.println("¿Se ha cambiado la posicion?: " + comandos.cd(lector.next()));
+
                     break;
 
                 case 3://ls                
@@ -103,18 +101,16 @@ public class MiniTerminal {
                 case 5://mkdir 
 
                     System.out.println("Introduce el nombre del directorio a crear");
-                    comandos.mkdir(lector.next());
-
+                    System.out.println("¿Se ha creado la carpeta?: " + comandos.mkdir(lector.next()));
                     break;
 
                 case 6://rm 
-                    comandos.rm();
-                    System.out.println("Se han borrado los archivos");
+                    System.out.println("¿Se han borrado los archivos?: " + comandos.rm());
                     break;
 
                 case 7://mv  
                     System.out.println("Introduce la direcciona del fichero que quieres renombrar y despues la direccion o nombre que le quieres dar");
-                    comandos.mv(lector.next(), lector.next());
+                    System.out.println("¿Se ha movido o renombrado?: " + comandos.mv(lector.next(), lector.next()));
                     break;
 
                 case 8://help
@@ -133,6 +129,4 @@ public class MiniTerminal {
 
 }
 ///Ruta para probar --> /3º_Ev/Programacion/EjFicheros/Documentos/Mis_Cosas/Fotografias
-///Ruta para probar --> \3º_Ev\Programacion\EjFicheros\Documentos\Mis_Cosas\Fotografias
-//FALTAN EXCEPCIONES
-A
+///Ruta para probar --> \3º_Ev\Programacion\EjFicheros\Documentos\Mis_Cosas\Fotografias\AA.txt.txt

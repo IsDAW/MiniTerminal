@@ -49,19 +49,26 @@ public class MiniFileManager {
     private File direccion;
     private boolean salida = false;
 
-    public void pwd() {//muestra la ruta de la carpeta actual
+    public void pwd() throws Exception {//muestra la ruta de la carpeta actual
 
         System.out.println("La ruta actual es " + direccion.getPath());
 
     }
 
-    public void cd(String x) {//cambia la direccion en la que estamos posicionados
+    public boolean cd(String x) throws Exception {//cambia la direccion en la que estamos posicionados
 
         File cosa = new File(x);
-        setDireccion(cosa);
+        if (cosa.exists() == true) {
+            setDireccion(cosa);
+            System.out.println("si");
+            return true;
+        } else {
+            System.out.println("no");
+            return false;
+        }
     }
 
-    public void ls() {
+    public void ls() throws Exception {
 
         if (direccion.isFile() == true) {
             System.out.println("[A]" + direccion.getName());
@@ -90,7 +97,7 @@ public class MiniFileManager {
 
     }
 
-    public void ll() {
+    public void ll() throws Exception {
 
         if (direccion.isFile() == true) {
             System.out.println("[A]" + direccion.getName());
@@ -125,29 +132,27 @@ public class MiniFileManager {
         }
     }
 
-    public static long tamañoByte(File x) {
+    public static long tamañoByte(File x) throws Exception {
 
         long tamaño = x.length();
         return tamaño;
     }
 
-    public static Date ultimaModificacion(File x) {//muestra la fecha de la ultima modificacion
+    public static Date ultimaModificacion(File x) throws Exception {//muestra la fecha de la ultima modificacion
 
         long milisegundos = x.lastModified();
         Date tiempo = new Date(milisegundos);
         return tiempo;
     }
 
-    public void mkdir(String x) {
+    public boolean mkdir(String x) throws Exception {
         String aux = direccion.getPath() + "/" + x;
-
         File carpeta = new File(aux);
-        carpeta.mkdir();
-        System.out.println("Carpeta creada con exito");
+        return carpeta.mkdir();
 
     }
 
-    public boolean rm() {
+    public boolean rm() throws Exception {
         if (direccion.isFile() == true) {
             direccion.delete();
             return true;
@@ -189,12 +194,11 @@ public class MiniFileManager {
 
     }
 
-    public void mv(String x, String y) throws Exception {//poner como boolean
+    public boolean mv(String x, String y) throws Exception {//poner como boolean
 
         File origen = new File(x);
         File destino = new File(y);
-        origen.renameTo(destino);
-        System.out.println("Se ha realizado el cambio");
+        return origen.renameTo(destino);
 
     }
 
