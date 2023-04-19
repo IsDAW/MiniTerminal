@@ -208,7 +208,7 @@ public class MiniFileManager {
 
     }
 
-    public  void help() {//muestra que hace los demas comandos
+    public void help() {//muestra que hace los demas comandos
         System.out.println("-El comando pwd te permite ver cual es la carpeta actual");
         System.out.println("-El comando cd permite cambiar la capeta en la que estamos posicionados por otra diferente");
         System.out.println("-El comando ls nos muestra la lista de directorios y archivos de la carpeta actual");

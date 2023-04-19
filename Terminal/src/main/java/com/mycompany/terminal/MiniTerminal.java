@@ -68,71 +68,75 @@ public class MiniTerminal {
                 rutaOk = true;
 
                 while (comandos.isSalida() == false) {
-                    System.out.println("Bienvenido al terminal.Introduce uno de los siguientes comandos :");
-                    System.out.println("");
-                    System.out.println("pwd");
-                    System.out.println("cd <dir>");
-                    System.out.println("ls");
-                    System.out.println("ll");
-                    System.out.println("mkdir <dir>");
-                    System.out.println("rm <file>");
-                    System.out.println("mv <file1> <file2>");
-                    System.out.println("help");
-                    System.out.println("exit");
-                    System.out.println("----------------------------------------------------------------------");
-                    String seleccion = lector.next();
-                    String opcion1 = "";
-                    String opcion2 = "";
+                    try {
+                        System.out.println("Bienvenido al terminal.Introduce uno de los siguientes comandos :");
+                        System.out.println("");
+                        System.out.println("pwd");
+                        System.out.println("cd <dir>");
+                        System.out.println("ls");
+                        System.out.println("ll");
+                        System.out.println("mkdir <dir>");
+                        System.out.println("rm <file>");
+                        System.out.println("mv <file1> <file2>");
+                        System.out.println("help");
+                        System.out.println("exit");
+                        System.out.println("----------------------------------------------------------------------");
+                        String seleccion = lector.next();
+                        String opcion1 = "";
+                        String opcion2 = "";
 
-                    if ("cd".equals(seleccion) || "mkdir".equals(seleccion) || "rm".equals(seleccion)) {
-                        opcion1 = lector.next();
-                    } else if ("mv".equals(seleccion)) {
-                        opcion1 = lector.next();
-                        opcion2 = lector.next();
+                        if ("cd".equals(seleccion) || "mkdir".equals(seleccion) || "rm".equals(seleccion)) {
+                            opcion1 = lector.next();
+                        } else if ("mv".equals(seleccion)) {
+                            opcion1 = lector.next();
+                            opcion2 = lector.next();
+                        }
+
+                        switch (seleccion) {
+                            case "pwd"://pwd
+                                comandos.pwd();
+                                System.out.println("----------------------------------------------------------------------");
+                                break;
+                            case "cd"://cd
+                                System.out.println("¿Se ha cambiado la posicion?: " + comandos.cd(opcion1));
+                                System.out.println("----------------------------------------------------------------------");
+                                break;
+                            case "ls"://ls
+                                comandos.ls();
+                                System.out.println("----------------------------------------------------------------------");
+                                break;
+                            case "ll"://ll
+                                comandos.ll();
+                                System.out.println("----------------------------------------------------------------------");
+                                break;
+                            case "mkdir"://mkdir
+                                System.out.println("¿Se ha creado la carpeta?: " + comandos.mkdir(opcion1));
+                                System.out.println("----------------------------------------------------------------------");
+                                break;
+                            case "rm"://rm
+                                System.out.println("¿Se han borrado los archivos posibles?: " + comandos.rm(opcion1));
+                                System.out.println("----------------------------------------------------------------------");
+                                break;
+                            case "mv"://mv
+                                System.out.println("¿Se ha movido o renombrado?: " + comandos.mv(opcion1, opcion2));
+                                System.out.println("----------------------------------------------------------------------");
+                                break;
+                            case "help"://help
+                                comandos.help();
+                                System.out.println("----------------------------------------------------------------------");
+                                break;
+                            case "exit"://exit
+                                comandos.exit();
+                                System.out.println("");
+                                break;
+                            default://se muestra cuando se ponga otra opcion diferente a las anteriores mencionadas
+                                System.out.println("Introduce una opcion valida");
+                                System.out.println("----------------------------------------------------------------------");
+                                break;
+                        }//fin switch
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
-                    switch (seleccion) {
-                        case "pwd"://pwd
-                            comandos.pwd();
-                            System.out.println("----------------------------------------------------------------------");
-                            break;
-                        case "cd"://cd
-                            System.out.println("¿Se ha cambiado la posicion?: " + comandos.cd(opcion1));
-                            System.out.println("----------------------------------------------------------------------");
-                            break;
-                        case "ls"://ls
-                            comandos.ls();
-                            System.out.println("----------------------------------------------------------------------");
-                            break;
-                        case "ll"://ll
-                            comandos.ll();
-                            System.out.println("----------------------------------------------------------------------");
-                            break;
-                        case "mkdir"://mkdir
-                            System.out.println("¿Se ha creado la carpeta?: " + comandos.mkdir(opcion1));
-                            System.out.println("----------------------------------------------------------------------");
-                            break;
-                        case "rm"://rm
-                            System.out.println("¿Se han borrado los archivos posibles?: " + comandos.rm(opcion1));
-                            System.out.println("----------------------------------------------------------------------");
-                            break;
-                        case "mv"://mv
-                            System.out.println("¿Se ha movido o renombrado?: " + comandos.mv(opcion1, opcion2));
-                            System.out.println("----------------------------------------------------------------------");
-                            break;
-                        case "help"://help
-                            comandos.help();
-                            System.out.println("----------------------------------------------------------------------");
-                            break;
-                        case "exit"://exit
-                            comandos.exit();
-                            System.out.println("");
-                            break;
-                        default://se muestra cuando se ponga otra opcion diferente a las anteriores mencionadas
-                            System.out.println("Introduce una opcion valida");
-                            System.out.println("----------------------------------------------------------------------");
-                            break;
-                    }//fin switch
                 }
 
             } else if (cosa.exists() == false) {
